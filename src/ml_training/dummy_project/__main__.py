@@ -6,8 +6,6 @@ import pandas as pd
 import joblib
 
 
-
-
 def setup_logging():
     log_file_path = LOGS_DIR / f"{datetime.today()}.log"
 
@@ -40,8 +38,8 @@ def main():
     df = pd.read_csv(CLEAN_DATA_DIR / "data.csv")
 
     logger.info("Splitting into X, y")
-    X = df.iloc[:,0].to_frame()
-    y = df['target']
+    X = df.iloc[:, 0].to_frame()
+    y = df["target"]
 
     logger.info("Fitting model")
     mdl = LogisticRegression()
