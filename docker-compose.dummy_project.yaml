@@ -2,7 +2,7 @@ services:
   training:
     build:
       context: .
-      dockerfile: Dockerfile.training
+      dockerfile: Dockerfile.dummy_project
     volumes:
     - "${ML_HOMELAB_ROOT}:${ML_HOMELAB_ROOT}:rw"
     environment:
