@@ -64,7 +64,7 @@ docker-compose -f docker-compose.<project_name>.yaml -p "<project_name>_<mode>" 
 For more control, the following can be exported:
 ```bash
 export CLEAN_DATA_DIR=/path/to/clean
-export MODELS_DIR=/path/to/models
+export MODEL_DIR=/path/to/models
 export LOGS_DIR=/path/to/logs
 export OUTPUT_SUFFIX=some_suffix
 ```
@@ -85,7 +85,7 @@ Or with more control over directories and outputs:
 ```bash
 export ML_HOMELAB_ROOT=/path/to/ml_homelab_root
 export CLEAN_DATA_DIR=/path/to/clean
-export MODELS_DIR=/path/to/models
+export MODEL_DIR=/path/to/models
 export LOGS_DIR=/path/to/logs
 export OUTPUT_SUFFIX=some_suffix
 
