@@ -6,18 +6,11 @@ services:
     volumes:
     - "${ML_HOMELAB_ROOT}:${ML_HOMELAB_ROOT}:rw"
     env_file:
-      - "${ML_HOMELAB_ROOT}/.terraform_envs"
+      - path: "${ML_HOMELAB_ROOT}/.terraform_envs"
+        required: false
     environment:
       - ML_HOMELAB_ROOT=${ML_HOMELAB_ROOT}
-      - PROJECT_NAME=${PROJECT_NAME}
-      - MODE=${MODE}
-      - DOCKER_NETWORK_NAME=${DOCKER_NETWORK_NAME}
-      - TIMESTAMP=${TIMESTAMP}
-      - OUTPUT_SUFFIX=${OUTPUT_SUFFIX}
-    networks: 
-      - external_net
-
-networks:
-  external_net:
-    external: true
-    name: ${DOCKER_NETWORK_NAME}
+      - OUTPUT_SUFFIX=${OUTPUT_SUFFIX:-dummy_project_local}
+      - CLEAN_DATA_DIR=${CLEAN_DATA_DIR:-data/clean}
+      - MODEL_DIR=${MODEL_DIR:-models}
+      - LOGS_DIR=${LOGS_DIR:-logs/training}
