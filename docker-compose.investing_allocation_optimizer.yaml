@@ -1,0 +1,16 @@
+services:
+  training:
+    build:
+      context: .
+      dockerfile: Dockerfile.investing_allocation_optimizer
+    volumes:
+    - "${ML_HOMELAB_ROOT}:${ML_HOMELAB_ROOT}:rw"
+    env_file:
+      - path: "${ML_HOMELAB_ROOT}/.terraform_envs"
+        required: false
+    environment:
+      - ML_HOMELAB_ROOT=${ML_HOMELAB_ROOT}
+      - OUTPUT_SUFFIX=${OUTPUT_SUFFIX:-investing_allocation_optimizer_local}
+      - CLEAN_DATA_DIR=${CLEAN_DATA_DIR:-data/clean}
+      - MODEL_DIR=${MODEL_DIR:-models}
+      - LOGS_DIR=${LOGS_DIR:-logs/training}
