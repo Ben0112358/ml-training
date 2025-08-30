@@ -7,7 +7,7 @@ def main():
             "docker",
             "compose",
             "-f",
-            "docker-compose.dummy_project.yaml",
+            "docker-compose.investing_allocation_optimizer.yaml",
             "up",
             "--build",
         ],

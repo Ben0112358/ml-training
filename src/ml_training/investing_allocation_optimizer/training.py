@@ -9,15 +9,20 @@ from ml_training.investing_allocation_optimizer.utils import (
 )
 
 
+def _metric(x):
+        return np.mean(x)
+
 def main():
     logger = logging.getLogger(__name__)
 
     logger.info("Gathering raw data")
     df = pd.read_csv(CLEAN_DATA_DIR / f"data_{ENV_VAR_OUTPUT_SUFFIX}.csv")
 
+    df.set_index('Date', drop=True, inplace=True)
+
     logger.info("Fitting model")
     mdl = BootstrapPortfolioOptimizer(
-        metric=lambda x: np.mean(x),
+        metric=_metric,
     )
     mdl.fit(df)
 
