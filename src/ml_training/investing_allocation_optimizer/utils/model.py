@@ -91,7 +91,9 @@ class BootstrapPortfolioOptimizer:
             [study.best_trial.params[f"w_{a}"] for a in self.assets_],
             index=self.assets_,
         )
-        self.optimal_weights_ = study.best_trial.user_attrs["normalized_weights"]
+        self.optimal_weights_ = study.best_trial.user_attrs[
+            "normalized_weights"
+        ]
         return self
 
     def predict(self) -> Dict[str, float]:
