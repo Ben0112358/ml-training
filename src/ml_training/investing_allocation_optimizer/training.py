@@ -22,10 +22,9 @@ def main():
     df.set_index("Date", drop=True, inplace=True)
 
     logger.info("Fitting model")
-    mdl = BootstrapPortfolioOptimizer(
-        metric=_metric,
-    )
-    mdl.fit(df)
+    mdl = BootstrapPortfolioOptimizer()
+    mdl.fit(df=df)
+    mdl.predict(metric = _metric)
 
     logger.info("Saving model")
     joblib.dump(mdl, MODEL_DIR / f"model_{ENV_VAR_OUTPUT_SUFFIX}.pkl")
