@@ -1,7 +1,6 @@
 import logging
 import pandas as pd
 import numpy as np
-import joblib
 from ml_training.config import CLEAN_DATA_DIR, MODEL_DIR, ENV_VAR_OUTPUT_SUFFIX
 from ml_training.utils import setup_logging
 from ml_training.investing_allocation_optimizer.utils import (
@@ -28,8 +27,9 @@ def main():
     mdl.predict(metric=_metric)
 
     logger.info("Saving model")
-    with open(MODEL_DIR / f"model_{ENV_VAR_OUTPUT_SUFFIX}.pkl", 'wb') as f:
+    with open(MODEL_DIR / f"model_{ENV_VAR_OUTPUT_SUFFIX}.pkl", "wb") as f:
         cloudpickle.dump(mdl, f)
+
 
 if __name__ == "__main__":
     logger = setup_logging()
