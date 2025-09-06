@@ -7,6 +7,7 @@ from ml_training.utils import setup_logging
 from ml_training.investing_allocation_optimizer.utils import (
     BootstrapPortfolioOptimizer,
 )
+import cloudpickle
 
 
 def _metric(x):
@@ -27,8 +28,8 @@ def main():
     mdl.predict(metric=_metric)
 
     logger.info("Saving model")
-    joblib.dump(mdl, MODEL_DIR / f"model_{ENV_VAR_OUTPUT_SUFFIX}.pkl")
-
+    with open(MODEL_DIR / f"model_{ENV_VAR_OUTPUT_SUFFIX}.pkl", 'wb') as f:
+        cloudpickle.dump(mdl, f)
 
 if __name__ == "__main__":
     logger = setup_logging()

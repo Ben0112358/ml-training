@@ -4,7 +4,7 @@ from sklearn.linear_model import LogisticRegression
 import joblib
 from ml_training.config import CLEAN_DATA_DIR, MODEL_DIR, ENV_VAR_OUTPUT_SUFFIX
 from ml_training.utils import setup_logging
-
+import cloudpickle
 
 def main():
     logger = logging.getLogger(__name__)
@@ -21,7 +21,8 @@ def main():
     mdl.fit(X, y)
 
     logger.info("Saving model")
-    joblib.dump(mdl, MODEL_DIR / f"model_{ENV_VAR_OUTPUT_SUFFIX}.pkl")
+    with open(MODEL_DIR / f"model_{ENV_VAR_OUTPUT_SUFFIX}.pkl", 'wb') as f:
+        cloudpickle.dump(mdl, f)
 
 
 if __name__ == "__main__":
