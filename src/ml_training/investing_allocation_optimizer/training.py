@@ -7,10 +7,7 @@ from ml_training.investing_allocation_optimizer.utils import (
     BootstrapPortfolioOptimizer,
 )
 import cloudpickle
-
-
-def _metric(x):
-    return np.mean(x)
+import ml_training
 
 
 def main():
@@ -24,11 +21,10 @@ def main():
     logger.info("Fitting model")
     mdl = BootstrapPortfolioOptimizer()
     mdl.fit(df=df)
-    mdl.predict(metric=_metric)
 
     logger.info("Saving model")
     with open(MODEL_DIR / f"model_{ENV_VAR_OUTPUT_SUFFIX}.pkl", "wb") as f:
-        cloudpickle.dump(mdl, f)
+        cloudpickle.dump((ml_training, mdl), f)
 
 
 if __name__ == "__main__":
