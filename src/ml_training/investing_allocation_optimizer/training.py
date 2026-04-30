@@ -1,6 +1,5 @@
 import logging
 import pandas as pd
-import numpy as np
 from ml_training.config import CLEAN_DATA_DIR, MODEL_DIR, ENV_VAR_OUTPUT_SUFFIX
 from ml_training.utils import setup_logging
 from ml_training.investing_allocation_optimizer.utils import (
