@@ -49,14 +49,12 @@ def bootstrap_portfolio_optuna_objective(
     weights /= weights.sum()
     trial.set_user_attr("normalized_weights", weights)
 
-    # 3D array: (n_periods, n_paths, n_assets)
     returns = np.stack(
         [bootstrap_paths[a].values.astype(float) for a in assets], axis=2
     )
 
     portfolio_returns = (returns * weights).sum(axis=2)
 
-    # Final value assuming arithmetic returns
     final_values = np.prod(1 + portfolio_returns, axis=0) - 1
 
     if (
