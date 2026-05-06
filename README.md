@@ -14,7 +14,7 @@ To get an overview of how all sub-repos in the full pipeline are tied together, 
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 ml-training/
@@ -38,7 +38,7 @@ ml-training/
 
 ---
 
-## ✅ Prerequisites
+## Prerequisites
 
 - **OS**: Linux or macOS  
 - **Docker**: Installed and running  
@@ -51,7 +51,7 @@ Set the base directory where shared ML assets and configs are stored:
 export ML_HOMELAB_ROOT=/absolute/path/to/ml-homelab
 ```
 
-## 🐳 Containerized run (more control)
+## Containerized run (more control)
 
 `ml-training` can be run for example in the following way. You may add args as you see fit.
 
@@ -71,7 +71,7 @@ export OUTPUT_SUFFIX=some_suffix
 
 ---
 
-## 🐍 Python run (less control; simplified)
+## Python run (less control; simplified)
 
 Run `ml-training` locally with sensible defaults:
 
@@ -97,7 +97,7 @@ python -m ml_training.<project_name>
 
 ---
 
-## ➕ Adding a New Project
+## Adding a New Project
 1. Create a folder under `ml_training/` with your project name:
 
 ```
@@ -119,7 +119,7 @@ src/ml_training/<new_project>/
 
 ---
 
-## 🧪 Testing
+## Testing
 
 Run unit tests with Poetry:
 
