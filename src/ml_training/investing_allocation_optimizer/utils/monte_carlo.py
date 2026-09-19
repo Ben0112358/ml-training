@@ -1,6 +1,17 @@
-import pandas as pd
-import numpy as np
 from typing import Literal, Union
+
+import numpy as np
+import pandas as pd
+
+
+def _block_length(
+    block_size: Union[int, Literal["cube root"]], n_obs: int
+) -> int:
+    if block_size == "cube root":
+        return max(1, int(round(n_obs ** (1 / 3))))
+    if isinstance(block_size, int) and block_size >= 1:
+        return block_size
+    raise ValueError(f"Invalid block_size: {block_size}")
 
 
 def stationary_bootstrap(
@@ -9,73 +20,41 @@ def stationary_bootstrap(
     block_size: Union[int, Literal["cube root"]] = "cube root",
     n_bootstrap_paths: int = 9999,
     random_seed: int | None = None,
-) -> dict[str, pd.DataFrame]:
+) -> tuple[np.ndarray, list[str]]:
     """
-    Generates stationary bootstrap resampled from a time series DataFrame.
+    Joint stationary bootstrap: one index path per bootstrap draw, all
+    assets share the same resampled time indices (preserves cross-asset
+    correlation within each path).
 
-    Args:
-        df (pd.DataFrame):
-            DataFrame with a datetime-like index and one time series per
-            column.
-        path_length (int):
-            Number of observations in each bootstrap path (unit of index
-            doesn't matter).
-        block_size (Union[int, Literal["cube root"]]):
-            Block size for the stationary bootstrap. Default: cube root
-            of len(df).
-        n_bootstrap_paths (int):
-            Number of bootstrap paths to generate per column.
-            Default: 9999.
-        random_seed (int | None):
-            Random seed for reproducibility. Default: None.
-
-    Returns:
-        dict[str, pd.DataFrame]:
-            Dictionary mapping column names to DataFrames of shape
-            (path_length, n_bootstrap_paths) containing bootstrap paths.
+    Returns
+    -------
+    returns : ndarray, shape (path_length, n_bootstrap_paths, n_assets)
+    assets : list of column names (asset labels)
     """
+    if path_length < 1:
+        raise ValueError("path_length must be >= 1")
+    if n_bootstrap_paths < 1:
+        raise ValueError("n_bootstrap_paths must be >= 1")
 
-    if random_seed is not None:
-        np.random.seed(random_seed)
+    assets = list(df.columns)
+    values = df[assets].values.astype(float)
+    n_obs, n_assets = values.shape
+    if n_obs < 2:
+        raise ValueError("Need at least 2 observations for bootstrap")
 
-    n_obs = len(df)
+    L = _block_length(block_size, n_obs)
+    p = 1.0 / L
 
-    if block_size == "cube root":
-        L = int(round(n_obs ** (1 / 3)))
-    else:
-        raise NotImplementedError(
-            f"block_size method {block_size} is not implemented."
-        )
+    rng = np.random.default_rng(random_seed)
 
-    p = 1 / L
+    idx = np.empty((path_length, n_bootstrap_paths), dtype=np.int64)
+    idx[0] = rng.integers(0, n_obs, size=n_bootstrap_paths)
+    for t in range(1, path_length):
+        cont = (idx[t - 1] + 1) % n_obs
+        fresh = rng.integers(0, n_obs, size=n_bootstrap_paths)
+        renew = rng.random(n_bootstrap_paths) < p
+        idx[t] = np.where(renew, fresh, cont)
 
-    bootstrap_dict = {
-        col: pd.DataFrame(
-            index=range(path_length), columns=range(n_bootstrap_paths)
-        )
-        for col in df.columns
-    }
-
-    for col in df.columns:
-        series = df[col].values
-        for path in range(n_bootstrap_paths):
-            sample = []
-            t = 0
-            while t < path_length:
-                start_idx = np.random.randint(0, n_obs)
-                block_len = np.random.geometric(p)
-                block = series[start_idx : start_idx + block_len]  # noqa: E203
-
-                # Extends beyond end => wrap around
-                if start_idx + block_len > n_obs:
-                    overflow = start_idx + block_len - n_obs
-                    block = np.concatenate(
-                        [series[start_idx:], series[:overflow]]
-                    )
-
-                sample.extend(block)
-                t += len(block)
-
-            bootstrap_dict[col].iloc[:, path] = sample[:path_length]
-
-    return bootstrap_dict
+    # values[idx] -> (path_length, n_paths, n_assets)
+    returns = values[idx]
+    return returns, assets
