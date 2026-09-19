@@ -27,7 +27,7 @@ LOGS_DIR = pl.Path(
 
 for var_name, path in [
     ("CLEAN_DATA_DIR", CLEAN_DATA_DIR),
-    ("RAW_DATA_DIR", MODEL_DIR),
+    ("MODEL_DIR", MODEL_DIR),
     ("LOGS_DIR", LOGS_DIR),
 ]:
     if path.name == "":
