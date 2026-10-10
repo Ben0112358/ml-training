@@ -65,6 +65,7 @@ def test_empty_notes_are_omitted():
     assert "Additional context" not in master_prompt
     assert "Feedback email:" in row_prompt
     assert "pedantic" in row_prompt
+    assert "date the meeting was held" in row_prompt
     assert "may not apply" in master_prompt
     assert "HIGH UNCERTAINTY" in master_prompt
     assert "HIGH UNCERTAINTY:" in master_prompt
