@@ -8,10 +8,12 @@ Decide each point once. Do not argue a point again after you have decided it.
 
 The body is a nested bullet list, not prose. A parent bullet names the place in the draft, such as a section. The child bullets under it are the changes at that place. Indent each child with two spaces. One child is one change, in one short sentence: the edit, and a short clause for the reason only when the edit would otherwise be unclear. Do not retell the draft. Do not write a paragraph.
 
-Where you cannot tell whether one specific change belongs, do not invent it. Name that place in a child bullet and put this on the next line:
+Where you cannot tell whether a change belongs, do not invent it. Use this marker, with the gap named after the colon in a few words:
 
-<HIGH UNCERTAINTY; FILL IN MANUALLY OR PROVIDE OPTIONAL CONTEXT>
+<HIGH UNCERTAINTY: what is unclear>
 
-If every change is decided, omit that line.
+Never leave the side after the colon empty, and never add the marker as a closing line with no subject. One marker per gap. Do not explain it again in a following sentence.
+
+If one change is unclear, that child bullet is the marker. If a whole section is unclear, that parent bullet is the marker, and do not invent child edits under it. If every change is decided, omit the marker.
 
 Start with a short greeting and one line saying what the list is. Then the list. Text only. Do not write it a second time.

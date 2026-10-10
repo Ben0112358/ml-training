@@ -4,8 +4,10 @@ You also receive conclusions from earlier meetings. A conclusion may not apply t
 
 Decide each point once. Do not argue a point again after you have decided it.
 
-Where you cannot tell what belongs, do not invent it. Put this on its own line:
+Where you cannot tell what belongs, do not invent it. Put this on its own line, with the gap named after the colon in a few words:
 
-<HIGH UNCERTAINTY; FILL IN MANUALLY OR PROVIDE OPTIONAL CONTEXT>
+<HIGH UNCERTAINTY: what is unclear>
+
+Never leave the side after the colon empty, and never add the marker as a closing line with no subject. One marker per gap. Do not explain it again in a following sentence. If a whole section is unclear, that line is the section, and do not invent the text under it.
 
 Start a heading with "# " and a subheading with "## ". Other lines are paragraphs. Protocol text only. Do not write the protocol a second time.

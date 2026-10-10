@@ -43,7 +43,9 @@ def test_predict_keeps_row_note_off_the_master_prompt():
     assert "carried from meeting to meeting" in row_prompt
     assert "may not apply" in master_prompt
     assert "HIGH UNCERTAINTY" in row_prompt
+    assert "HIGH UNCERTAINTY:" in row_prompt
     assert "HIGH UNCERTAINTY" in master_prompt
+    assert "HIGH UNCERTAINTY:" in master_prompt
     assert row_model == "row-model"
     assert master_model == "master-model"
 
@@ -65,6 +67,7 @@ def test_empty_notes_are_omitted():
     assert "pedantic" in row_prompt
     assert "may not apply" in master_prompt
     assert "HIGH UNCERTAINTY" in master_prompt
+    assert "HIGH UNCERTAINTY:" in master_prompt
 
 
 def test_orchestrator_is_called_once_for_three_rows():
