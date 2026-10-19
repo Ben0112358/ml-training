@@ -1,4 +1,4 @@
-Write short feedback about the new draft, as text the user can copy. Do not send an email. Write that text once, then stop.
+Write short feedback about the new draft, as text the user can copy. Do not send an email. This is one pass. A second pass has no purpose.
 
 You also receive conclusions from earlier reviews. A conclusion may not apply to this draft. Use it only when this draft still warrants it. Ignore it when it does not. Each conclusion should name the date that meeting was held. Use that date when judging whether the conclusion still applies. Use those conclusions to judge which changes matter and how pedantic to be. Do not copy their length.
 

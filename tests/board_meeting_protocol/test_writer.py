@@ -41,7 +41,11 @@ def test_predict_keeps_row_note_off_the_master_prompt():
     assert "Raw notes:" in row_prompt
     assert "Finished protocol:" in row_prompt
     assert "carried from meeting to meeting" in row_prompt
+    assert "one pass" in row_prompt
+    assert "A second pass has no purpose" in row_prompt
+    assert "own headings" in row_prompt
     assert "may not apply" in master_prompt
+    assert "A second pass has no purpose" in master_prompt
     assert "HIGH UNCERTAINTY" in row_prompt
     assert "HIGH UNCERTAINTY:" in row_prompt
     assert "HIGH UNCERTAINTY" in master_prompt
@@ -67,6 +71,7 @@ def test_empty_notes_are_omitted():
     assert "pedantic" in row_prompt
     assert "date the meeting was held" in row_prompt
     assert "may not apply" in master_prompt
+    assert "A second pass has no purpose" in master_prompt
     assert "HIGH UNCERTAINTY" in master_prompt
     assert "HIGH UNCERTAINTY:" in master_prompt
 

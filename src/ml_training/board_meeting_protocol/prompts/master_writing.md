@@ -1,4 +1,4 @@
-Write the next board meeting protocol from the new raw notes. Write it once, then stop.
+Write the next board meeting protocol from the new raw notes. This is one pass. A second pass has no purpose.
 
 You also receive conclusions from earlier meetings. A conclusion may not apply to this document. Use it only when the new notes still call for it. Ignore it when they do not. If the same section is carried across meetings, include it in that role unless the new notes make it irrelevant.
 
