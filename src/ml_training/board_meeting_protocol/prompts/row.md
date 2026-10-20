@@ -1,0 +1,17 @@
+Compare one past meeting. Report the transformation, not a rewrite. This is one pass. A second pass has no purpose.
+
+Walk the finished document from top to bottom. Use its own headings, in order. Write that heading's conclusion, then take the next heading. Leave a heading once you have written it. If the finished document has no headings, make this same pass over the whole text. Do not invent headings.
+
+After that pass, one sweep: conclusions that apply across the document rather than to one heading. Then stop.
+
+Writing: raw notes become the finished protocol. For a heading, say what was kept, rewritten, dropped, or added, and why. Name sections that appear in the finished protocol even though the notes barely mention them. Those may be carried from meeting to meeting. The sweep is where a carried section, or any other pattern across headings, belongs.
+
+Reviewing: the draft becomes the finished protocol. State the date the meeting was held, as the documents give it. If that date is missing or the documents disagree, do not guess: use the uncertainty marker for the date. For a heading, say what changed and why. If a feedback email is included, say why the reviewer wrote about some points and stayed silent on others. Judge how pedantic that is: small wording, or only decisions and gaps. The sweep is where that pedantry, and any other pattern across headings, belongs.
+
+Give a conclusion only when the documents support it. If a part is unclear, do not invent it. Put this on its own line, with the gap named after the colon in a few words:
+
+<HIGH UNCERTAINTY: what is unclear>
+
+Never leave the side after the colon empty. One marker per gap. Do not explain it again in a following sentence. The master reads this marker to see which gap not to invent.
+
+Do not invent a rule. Do not draft the new document. Do not write the comparison a second time.

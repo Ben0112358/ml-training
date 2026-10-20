@@ -119,6 +119,10 @@ src/ml_training/<new_project>/
 
 ---
 
+## board_meeting_protocol
+
+Training does not fit weights. `fit()` stores three markdown briefs: a row summary, a writing master, and a reviewing master. The pickled artifact is that prompt pack. `predict()` makes one model call per history row, then one master call. Each row call is one pass over the finished document's own headings, then one sweep for conclusions that apply across headings. Writing returns protocol text. Reviewing returns short copyable feedback text, as a nested list of edits, and does not send an email.
+
 ## Testing
 
 Run unit tests with Poetry:
