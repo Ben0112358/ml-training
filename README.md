@@ -113,7 +113,7 @@ src/ml_training/<new_project>/
 
 3. Add corresponding `docker-compose.<new_project>.yaml` and `Dockerfile.<new_project>`.
 
-4. Set project-specific configuration in `ml_training/config.py` or via environment variables (`CLEAN_DATA_DIR`, `MODELS_DIR`, `OUTPUT_SUFFIX`).  
+4. Set project-specific configuration in `ml_training/config.py` or via environment variables (`CLEAN_DATA_DIR`, `MODEL_DIR`, `LOGS_DIR`, `OUTPUT_SUFFIX`).  
 
 `src/ml_training/dummy_project` is a very simple project which can be studied to learn how it all ties together.
 
