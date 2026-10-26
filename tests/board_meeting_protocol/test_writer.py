@@ -1,3 +1,5 @@
+import pytest
+
 from ml_training.board_meeting_protocol.utils.backend import TextModel
 from ml_training.board_meeting_protocol.utils.writer import ProtocolWriter
 
@@ -112,3 +114,63 @@ def test_progress_shows_row_text_sent_to_the_orchestrator():
     start = next(event for event in events if event["step"] == "orchestrator")
     assert "Row summary" in start["received"]
     assert events[-1]["reply"] == "Finished protocol text"
+
+
+class BlankOrchestratorModel(FakeModel):
+    def complete(self, prompt: str, model: str | None, on_delta=None) -> str:
+        reply = super().complete(prompt, model, on_delta)
+        if "Conclusions from earlier rows" in prompt:
+            return "  \n"
+        return reply
+
+
+def test_unknown_mode_is_rejected():
+    writer = ProtocolWriter().fit()
+    backend = FakeModel()
+    with pytest.raises(ValueError):
+        writer.predict(backend, mode="summarizing", rows=[], new_text="today")
+    assert backend.calls == []
+
+
+def test_blank_new_text_is_rejected():
+    writer = ProtocolWriter().fit()
+    backend = FakeModel()
+    with pytest.raises(ValueError):
+        writer.predict(backend, mode="writing", rows=[], new_text="  \n\t")
+    assert backend.calls == []
+
+
+def test_only_the_first_three_complete_rows_are_used():
+    writer = ProtocolWriter().fit()
+    backend = FakeModel()
+    writer.predict(
+        backend,
+        mode="writing",
+        rows=[
+            {"left": "raw zero", "middle": ""},
+            {"left": "raw one", "middle": "done one"},
+            {"left": "raw two", "middle": "done two"},
+            {"left": "raw three", "middle": "done three"},
+            {"left": "raw four", "middle": "done four"},
+        ],
+        new_text="today",
+    )
+    row_prompts = [prompt for prompt, _ in backend.calls[:-1]]
+    assert len(row_prompts) == 3
+    assert "raw one" in row_prompts[0]
+    assert "raw two" in row_prompts[1]
+    assert "raw three" in row_prompts[2]
+    assert not any("raw zero" in prompt for prompt, _ in backend.calls)
+    assert not any("raw four" in prompt for prompt, _ in backend.calls)
+
+
+def test_blank_orchestrator_reply_raises():
+    writer = ProtocolWriter().fit()
+    backend = BlankOrchestratorModel()
+    with pytest.raises(RuntimeError):
+        writer.predict(
+            backend,
+            mode="reviewing",
+            rows=[{"left": "draft", "middle": "final"}],
+            new_text="new draft",
+        )
