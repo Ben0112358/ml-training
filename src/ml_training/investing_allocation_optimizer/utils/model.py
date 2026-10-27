@@ -122,10 +122,16 @@ class BootstrapPortfolioOptimizer:
             cancel_event=cancel_event,
         )
 
-        if study.best_trial is None or study.best_trial.value is None:
+        try:
+            best_trial = study.best_trial
+        except ValueError as exc:
+            raise RuntimeError(
+                "Optimization produced no feasible trials"
+            ) from exc
+        if best_trial is None or best_trial.value is None:
             raise RuntimeError("Optimization produced no feasible trials")
 
-        weights_list = study.best_trial.user_attrs["normalized_weights"]
+        weights_list = best_trial.user_attrs["normalized_weights"]
         weights_arr = np.array(weights_list)
         weights = {a: float(w) for a, w in zip(assets, weights_arr)}
 
@@ -142,7 +148,7 @@ class BootstrapPortfolioOptimizer:
         return {
             "weights": weights,
             "metric": metric,
-            "metric_value": float(study.best_value),
+            "metric_value": float(best_trial.value),
             "stats": stats,
             "benchmark_stats": benchmark_stats,
             "benchmark_label": BENCHMARK_LABEL,
