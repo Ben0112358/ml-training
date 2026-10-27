@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import pytest
 
 from ml_training.investing_allocation_optimizer.utils.model import (
     BootstrapPortfolioOptimizer,
@@ -28,3 +29,26 @@ def test_predict_returns_structure():
     assert "weights" in out
     assert abs(sum(out["weights"].values()) - 1.0) < 1e-6
     assert out["benchmark_stats"] is not None
+
+
+def test_predict_raises_runtime_error_when_no_trial_is_feasible():
+    rng = np.random.default_rng(1)
+    n = 120
+    dates = pd.date_range("2015-01-01", periods=n, freq="B")
+    df = pd.DataFrame(
+        {
+            "total-world": rng.normal(0.0004, 0.01, n),
+            "growth": rng.normal(0.0005, 0.012, n),
+        },
+        index=dates,
+    )
+    mdl = BootstrapPortfolioOptimizer().fit(df)
+    with pytest.raises(RuntimeError):
+        mdl.predict(
+            metric="mean_return",
+            p_5_constraint=10.0,
+            n_trials=3,
+            n_bootstrap_paths=20,
+            horizon_years=1.0,
+            random_seed=0,
+        )
