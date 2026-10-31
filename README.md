@@ -18,8 +18,8 @@ To get an overview of how all sub-repos in the full pipeline are tied together, 
 
 ```
 ml-training/
-├── docker-compose.dummy_project.yaml   # Docker Compose file for containerized run
-├── Dockerfile.dummy_project            # Dockerfile for containerized project
+├── docker-compose.<project_name>.yaml  # Docker Compose file per project (containerized run)
+├── Dockerfile.<project_name>           # Dockerfile per project
 ├── LICENSE
 ├── poetry.lock
 ├── pyproject.toml
@@ -27,13 +27,15 @@ ml-training/
 ├── src/
 │   └── ml_training/
 │       ├── config.py                   # Global configuration (paths, suffixes)
+│       ├── board_meeting_protocol/     # Prompt pack for writing and reviewing meeting protocols
+│       ├── investing_allocation_optimizer/  # Bootstrap + Optuna portfolio allocation model
 │       ├── dummy_project/
 │       │   ├── training.py             # Core training logic
 │       │   ├── utils/                  # Project-specific helpers (e.g. fake data)
 │       │   ├── __main__.py             # Local dev CLI entrypoint
 │       │   └── __init__.py
 │       └── utils/                      # Shared utils (logging, etc.)
-└── tests/                              # Unit tests
+└── tests/                              # Unit tests, laid out like src/ml_training/
 ```
 
 ---
