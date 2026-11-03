@@ -10,18 +10,22 @@ ENV_VAR_CONFIG_PATH = os.environ.get("CONFIG_PATH")
 CONFIG = {}
 if ENV_VAR_CONFIG_PATH and pl.Path(ENV_VAR_CONFIG_PATH).exists():
     with open(ENV_VAR_CONFIG_PATH) as f:
-        CONFIG = yaml.safe_load(f)
+        loaded = yaml.safe_load(f)
+    # Empty / null documents mean no overrides (same as a missing file).
+    CONFIG = {} if loaded is None else loaded
+
+_paths = CONFIG.get("paths") or {}
 
 CLEAN_DATA_DIR = pl.Path(
-    CONFIG.get("paths", {}).get("clean_data")
+    _paths.get("clean_data")
     or (ENV_VAR_ML_HOMELAB_ROOT / os.environ.get("CLEAN_DATA_DIR", ""))
 )
 MODEL_DIR = pl.Path(
-    CONFIG.get("paths", {}).get("models")
+    _paths.get("models")
     or (ENV_VAR_ML_HOMELAB_ROOT / os.environ.get("MODEL_DIR", ""))
 )
 LOGS_DIR = pl.Path(
-    CONFIG.get("paths", {}).get("data_logs")
+    _paths.get("data_logs")
     or (ENV_VAR_ML_HOMELAB_ROOT / os.environ.get("LOGS_DIR", ""))
 )
 
