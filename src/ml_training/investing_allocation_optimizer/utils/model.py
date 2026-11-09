@@ -21,8 +21,6 @@ def infer_periods_per_year(df: pd.DataFrame) -> float:
         return 252.0
     deltas = pd.Series(dates).diff().dropna().dt.days
     median_days = float(deltas.median())
-    if median_days <= 0:
-        return 252.0
     if median_days <= 2:
         return 252.0
     if median_days <= 8:
@@ -47,18 +45,11 @@ class BootstrapPortfolioOptimizer:
         self.assets_ = list(self.df.columns)
         self.periods_per_year_ = infer_periods_per_year(self.df)
         idx = self.df.index
-        if hasattr(idx, "min"):
-            self.sample_window_ = {
-                "start": str(idx.min()),
-                "end": str(idx.max()),
-                "rows": int(len(self.df)),
-            }
-        else:
-            self.sample_window_ = {
-                "start": None,
-                "end": None,
-                "rows": len(self.df),
-            }
+        self.sample_window_ = {
+            "start": str(idx.min()),
+            "end": str(idx.max()),
+            "rows": int(len(self.df)),
+        }
         return self
 
     def predict(
