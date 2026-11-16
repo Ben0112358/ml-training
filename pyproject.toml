@@ -19,13 +19,13 @@ pyyaml = ">=6.0.2,<7.0.0"
 cloudpickle = "^3.1.1"
 urllib3 = ">=2.7.0,<3.0.0"
 certifi = ">=2026.10.19"
-mako = "1.4.2"
+mako = "1.4.3"
 
 [tool.poetry.group.dev.dependencies]
 black = "^26.3.1"
 flake8 = "^7.3.0"
 pytest = "^9.0.3"
-pygments = "2.20.0"
+pygments = "2.21.0"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
