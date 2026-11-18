@@ -44,7 +44,7 @@ ml-training/
 
 - **OS**: Linux or macOS  
 - **Docker**: Installed and running  
-- **Python**: 3.13 (`>=3.13,<3.14`); use `poetry install --sync`  
+- **Python**: 3.13 (`>=3.13,<3.14`); use `poetry sync`  
 - **Poetry**: For dependency management  
 
 Set the base directory where shared ML assets and configs are stored:
@@ -52,6 +52,17 @@ Set the base directory where shared ML assets and configs are stored:
 ```bash
 export ML_HOMELAB_ROOT=/absolute/path/to/ml-homelab
 ```
+
+Optionally, `CONFIG_PATH` can point to a YAML file whose `paths` section overrides the directory environment variables:
+
+```yaml
+paths:
+  clean_data: /path/to/clean   # overrides CLEAN_DATA_DIR
+  models: /path/to/models      # overrides MODEL_DIR
+  data_logs: /path/to/logs     # overrides LOGS_DIR
+```
+
+Each key is optional, and a key that is set takes precedence over its environment variable. Paths from the file are used as given, while the environment variables are resolved under `ML_HOMELAB_ROOT`. A missing or empty file means no overrides. The Docker Compose files do not forward `CONFIG_PATH`, so for a containerized run it has to reach the container another way, for example through the optional `${ML_HOMELAB_ROOT}/.terraform_envs` env file they load.
 
 ## Containerized run (more control)
 
