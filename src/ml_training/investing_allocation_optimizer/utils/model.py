@@ -13,6 +13,8 @@ def infer_periods_per_year(df: pd.DataFrame) -> float:
     if not isinstance(df.index, pd.DatetimeIndex):
         if "Date" in df.columns:
             dates = pd.to_datetime(df["Date"])
+        elif df.index.name == "Date":
+            dates = pd.to_datetime(df.index)
         else:
             return 252.0
     else:
