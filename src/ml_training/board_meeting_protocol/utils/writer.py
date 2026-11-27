@@ -113,16 +113,19 @@ def _listener(progress, step: str):
 def _received(findings: list[str]) -> str:
     if not findings:
         return "No history rows. This call only sees the new document."
-    blocks = [
-        f"Row {index}:\n{text}" for index, text in enumerate(findings, 1)
-    ]
-    return "\n\n".join(blocks)
+    return "\n\n".join(_finding_blocks(findings))
+
+
+def _finding_blocks(findings: list[str]) -> list[str]:
+    return [f"Row {index}:\n{text}" for index, text in enumerate(findings, 1)]
+
+
+def _row_field(row: dict, key: str) -> str:
+    return str(row.get(key) or "").strip()
 
 
 def _row_is_complete(row: dict) -> bool:
-    left = str(row.get("left") or "").strip()
-    middle = str(row.get("middle") or "").strip()
-    return bool(left and middle)
+    return bool(_row_field(row, "left") and _row_field(row, "middle"))
 
 
 _ROW_LABELS = {
@@ -132,14 +135,14 @@ _ROW_LABELS = {
 
 
 def _row_prompt(brief: str, mode: str, row: dict) -> str:
-    note = str(row.get("note") or "").strip()
+    note = _row_field(row, "note")
     left, middle, right = _ROW_LABELS[mode]
     parts = [
         brief,
         f"Mode: {mode}",
-        f"{left}:\n" + str(row.get("left") or "").strip(),
-        f"{middle}:\n" + str(row.get("middle") or "").strip(),
-        f"{right}:\n" + str(row.get("right") or "").strip(),
+        f"{left}:\n" + _row_field(row, "left"),
+        f"{middle}:\n" + _row_field(row, "middle"),
+        f"{right}:\n" + _row_field(row, "right"),
     ]
     if note:
         parts.append("Additional context:\n" + note)
@@ -154,8 +157,7 @@ def _master_prompt(
 ) -> str:
     blocks = [brief, "Conclusions from earlier rows:"]
     if findings:
-        for index, finding in enumerate(findings, start=1):
-            blocks.append(f"Row {index}:\n{finding}")
+        blocks.extend(_finding_blocks(findings))
     else:
         blocks.append("No earlier rows were provided.")
     blocks.append("New document:\n" + new_text.strip())
